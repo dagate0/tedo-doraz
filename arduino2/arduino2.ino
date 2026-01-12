@@ -59,25 +59,25 @@ ms
  IMU.getAccel(&amp;accelData);
  Serial.println(accelData.accelX);
  Serial.print(&quot;\t&quot;);
-  Serial.print(accelData.accelY);
-  Serial.print(&quot;\t&quot;);
-  Serial.print(accelData.accelZ);
-  Serial.print(&quot;\t&quot;);
-  IMU.getGyro(&amp;gyroData);
-  Serial.print(gyroData.gyroX);
-  Serial.print(&quot;\t&quot;);
-  Serial.print(gyroData.gyroY);
-  Serial.print(&quot;\t&quot;);
-  Serial.print(gyroData.gyroZ);
-      }
-      else
-      Serial.println(&quot;accellerometro spento&quot;);
-if(digitalRead(int2)==0){
-valore = analogRead(Sensore); 
-umidita = map(valore, 0, 1023, 0, 100);  // per trasformare in percentuale
-Serial.println(String (&quot; \n Umidita: &quot;) + umidita + &quot;%&quot;);
+ Serial.print(accelData.accelY);
+ Serial.print(&quot;\t&quot;);
+ Serial.print(accelData.accelZ);
+ Serial.print(&quot;\t&quot;);
+ IMU.getGyro(&amp;gyroData);
+ Serial.print(gyroData.gyroX);
+ Serial.print(&quot;\t&quot;);
+ Serial.print(gyroData.gyroY);
+ Serial.print(&quot;\t&quot;);
+ Serial.print(gyroData.gyroZ);
 }
-      else
-      Serial.println(&quot;umidita spento&quot;);
+else
+ Serial.println(&quot;accellerometro spento&quot;);
+ if(digitalRead(int2)==0){
+ valore = analogRead(Sensore); 
+ umidita = map(valore, 0, 1023, 0, 100);  // per trasformare in percentuale
+ Serial.println(String (&quot; \n Umidita: &quot;) + umidita + &quot;%&quot;);
+}
+else
+ Serial.println(&quot;umidita spento&quot;);
 }
 }
