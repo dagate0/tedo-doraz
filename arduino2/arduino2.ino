@@ -35,32 +35,30 @@ Serial.begin(115200);
  Serial.print(calib.accelBias[1]);
  Serial.print(&quot;, &quot;);
  Serial.println(calib.accelBias[2]);
-  Serial.println(&quot;Gyro biases X/Y/Z: &quot;);
-  Serial.print(calib.gyroBias[0]);
+ Serial.println(&quot;Gyro biases X/Y/Z: &quot;);
+ Serial.print(calib.gyroBias[0]);
 
-5
 
-  Serial.print(&quot;, &quot;);
+ Serial.print(&quot;, &quot;);
   Serial.print(calib.gyroBias[1]);
-  Serial.print(&quot;, &quot;);
-  Serial.println(calib.gyroBias[2]);
- 
-  delay(5000);
-  IMU.init(calib, IMU_ADDRESS);
+ Serial.print(&quot;, &quot;);
+ Serial.println(calib.gyroBias[2]);
+ delay(5000);
+ IMU.init(calib, IMU_ADDRESS);
 #endif
 
 }
 void loop() {
-   unsigned long currentMillis = millis();  // Ottieni il tempo corrente
- 
-  if (currentMillis - lastMillis &gt;= interval) {  // Se sono passati almeno 1000
+unsigned long currentMillis = millis();  // Ottieni il tempo corrente
+
+ if (currentMillis - lastMillis &gt;= interval) {  // Se sono passati almeno 1000
 ms
-    lastMillis = currentMillis;
-    if ( digitalRead(int1)==0){
-        IMU.update();
-  IMU.getAccel(&amp;accelData);
-  Serial.println(accelData.accelX);
-  Serial.print(&quot;\t&quot;);
+ lastMillis = currentMillis;
+ if ( digitalRead(int1)==0){
+ IMU.update();
+ IMU.getAccel(&amp;accelData);
+ Serial.println(accelData.accelX);
+ Serial.print(&quot;\t&quot;);
   Serial.print(accelData.accelY);
   Serial.print(&quot;\t&quot;);
   Serial.print(accelData.accelZ);
