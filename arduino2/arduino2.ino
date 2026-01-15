@@ -3,6 +3,7 @@
 #define Sensore A0
 #define int1 2
 #define int2 3
+#define vibra 4
 #define IMU_ADDRESS 0x69    //Change to the address of the IMU
 #define PERFORM_CALIBRATION
 BMI160 IMU;
@@ -13,11 +14,14 @@ int valore, rslt, i;
 int umidita;
 unsigned long lastMillis = 0;  // Tempo dell&#39;ultima lettura
 unsigned long interval = 1000;
+volatile bool vibrazioneRilevata = false;
 void setup() {
   // put your setup code here, to run once:
 pinMode(Sensore, INPUT);
 pinMode(int1, INPUT);
+pinMode(vibra, INPUT);
 Wire.begin();
+ attachInterrupt(digitalPinToInterrupt(vibra), allarme, FALLING);
  Wire.setClock(400000); //400khz clock
 Serial.begin(115200);
  while (!Serial) {
@@ -79,5 +83,14 @@ else
 }
 else
  Serial.println(&quot;umidita spento&quot;);
+}
+if (vibrazioneRilevata) {
+    Serial.println("ATTENZIONE: Vibrazione rilevata!");
+    vibrazioneRilevata = false;
+    delay(200); 
+  }
+}
+void allarme() {
+  vibrazioneRilevata = true;
 }
 }
