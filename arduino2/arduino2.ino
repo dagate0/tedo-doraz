@@ -3,22 +3,27 @@
 #define Sensore A0
 #define int1 2
 #define int2 3
-#define IMU_ADDRESS 0x69      //Change to the address of the IMU
+#define vibra 4
+#define IMU_ADDRESS 0x69    //Change to the address of the IMU
 #define PERFORM_CALIBRATION
 BMI160 IMU;
-calData calib = { 0 };   //Calibration data
-AccelData accelData;      //Sensor data
+calData calib = { 0 };  //Calibration data
+AccelData accelData;    //Sensor data
 GyroData gyroData;
 int valore, rslt, i; 
 int umidita;
-unsigned long lastMillis = 0;   // Tempo dell&#39;ultima lettura
+unsigned long lastMillis = 0;  // Tempo dell&#39;ultima lettura
 unsigned long interval = 1000;
+volatile bool vibrazioneRilevata = false;
 void setup() {
-   // put your setup code here, to run once:
+  // put your setup code here, to run once:
 pinMode(Sensore, INPUT);
 pinMode(int1, INPUT);
+pinMode(vibra, INPUT);
 Wire.begin();
  Wire.setClock(400000); //400khz clock
+attachInterrupt(digitalPinToInterrupt(vibra), allarme, FALLING);
+Wire.setClock(400000); //400khz clock
 Serial.begin(115200);
  while (!Serial) {
  ;
@@ -49,9 +54,9 @@ Serial.begin(115200);
 
 }
 void loop() {
-unsigned long currentMillis = millis();   // Ottieni il tempo corrente
+unsigned long currentMillis = millis();  // Ottieni il tempo corrente
 
- if (currentMillis - lastMillis >= interval) {   // Se sono passati almeno 1000
+ if (currentMillis - lastMillis >= interval) {  // Se sono passati almeno 1000
 ms
  lastMillis = currentMillis;
  if ( digitalRead(int1)==0){
@@ -74,10 +79,19 @@ else
  Serial.println("accellerometro spento");
  if(digitalRead(int2)==0){
  valore = analogRead(Sensore); 
- umidita = map(valore, 0, 1023, 0, 100);   // per trasformare in percentuale
+ umidita = map(valore, 0, 1023, 0, 100);  // per trasformare in percentuale
  Serial.println(String (" \n Umidita: ") + umidita + "%");
 }
 else
  Serial.println("umidita spento");
+}
+if (vibrazioneRilevata) {
+    Serial.println("ATTENZIONE: Vibrazione rilevata!");
+    vibrazioneRilevata = false;
+    delay(200); 
+  }
+}
+void allarme() {
+  vibrazioneRilevata = true;
 }
 }
