@@ -4,7 +4,11 @@
 #define int1 2
 #define int2 3
 #define vibra 4
+<<<<<<< HEAD
 #define IMU_ADDRESS 0x69    //Change to the address of the IMU
+=======
+#define IMU_ADDRESS 0x69    //Change to the address of the IMU
+>>>>>>> origin/tedone-(codice)
 #define PERFORM_CALIBRATION
 BMI160 IMU;
 calData calib = { 0 };  //Calibration data
@@ -21,6 +25,7 @@ pinMode(Sensore, INPUT);
 pinMode(int1, INPUT);
 pinMode(vibra, INPUT);
 Wire.begin();
+ attachInterrupt(digitalPinToInterrupt(vibra), allarme, FALLING);
  Wire.setClock(400000); //400khz clock
 attachInterrupt(digitalPinToInterrupt(vibra), allarme, FALLING);
 Wire.setClock(400000); //400khz clock
@@ -84,6 +89,15 @@ else
 }
 else
  Serial.println("umidita spento");
+}
+if (vibrazioneRilevata) {
+    Serial.println("ATTENZIONE: Vibrazione rilevata!");
+    vibrazioneRilevata = false;
+    delay(200); 
+  }
+}
+void allarme() {
+  vibrazioneRilevata = true;
 }
 if (vibrazioneRilevata) {
     Serial.println("ATTENZIONE: Vibrazione rilevata!");
