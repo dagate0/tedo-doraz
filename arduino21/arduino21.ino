@@ -19,7 +19,7 @@ volatile bool vibrazioneRilevata = false;
 void setup() {
   // put your setup code here, to run once:
 pinMode(Sensore, INPUT);
-pinMode(int1, INPUT);
+pinMode(int1, INPUT_PULLUP);
 pinMode(int2, INPUT);
 pinMode(int3, INPUT);
 pinMode(vibra, INPUT);
@@ -87,7 +87,10 @@ else
  Serial.println("umidita spento");
 }
 if (vibrazioneRilevata) {
-   if ( digitalRead(int1)==0){
+  if ( digitalRead(int3)==0)
+    Serial.println("vibrazione spento");
+  
+   if ( digitalRead(int3)==0){
     Serial.println("ATTENZIONE: Vibrazione rilevata!");
     vibrazioneRilevata = false;
     delay(200); 
