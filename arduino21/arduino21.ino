@@ -4,7 +4,7 @@
 #define int1 3
 #define int2 4
 #define int3 5
-#define vibra 2
+#define vibra 1
 #define IMU_ADDRESS 0x69    //Change to the address of the IMU
 #define PERFORM_CALIBRATION
 BMI160 IMU;
@@ -14,7 +14,7 @@ GyroData gyroData;
 int valore, rslt, i; 
 int umidita;
 unsigned long lastMillis = 0;
-unsigned long interval = 1000;
+unsigned long interval = 3000;
 volatile bool vibrazioneRilevata = false;
 void setup() {
   // put your setup code here, to run once:
@@ -87,7 +87,7 @@ else
  Serial.println("umidita spento");
 }
 if (vibrazioneRilevata) {
-  if ( digitalRead(int3)==0)
+if ( digitalRead(int3)==0)
     Serial.println("vibrazione spento");
   
    if ( digitalRead(int3)==0){
